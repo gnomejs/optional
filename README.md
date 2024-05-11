@@ -1,4 +1,4 @@
-# @gnome/assert
+# @gnome/optional
 
 <div height=30" vertical-align="top">
 <image src="https://raw.githubusercontent.com/gnomejs/gnomejs/main/assets/icon.png"
@@ -8,49 +8,27 @@
 
 ## Overview
 
-Assert wraps deno `@std/assert` to make the functions more ergonomic for testing.
-
-## Mapping
-
-The asserts are mapped to the follow:
-
-```typescript
-{
-    equals: assertEquals,
-    strictEquals: assertStrictEquals,
-    notEquals: assertNotEquals,
-    notStrictEquals: assertNotStrictEquals,
-    match: assertMatch,
-    notMatch: assertNotMatch,
-    arrayIncludes: assertArrayIncludes,
-    throws: assertThrows,
-    rejects: assertRejects,
-    ok: assertTruthy,
-    truthy: assertTruthy,
-    exists: assertExists,
-    almostEquals: assertAlmostEquals,
-    falsey: assertFalse,
-    stringIncludes: assertStringIncludes,
-    instanceOf: assertInstanceOf,
-    isError: assertIsError,
-    notInstanceOf: assertNotInstanceOf,
-    matchObject: assertObjectMatch,
-    fail: fail,
-    unimplemented: unimplemented,
-    unreachable: unreachable,
-}
-```
+The optional module provides the types `Option<T>` and `Result<T, E>`.
 
 ## Basic Usage
 
 ```typescript
-import { assert, equals } from "@gnome/assert";
+import { ok, err, some, none } from "@gnome/optional";
 
-assert.ok(null, "truthy condition was false");
-assert.equals(1, 1);
+const r = ok(10);
+console.log(r.isOk);
+console.log(r.isError);
 
-// or import just the method
-equals(1, 1);
+console.log(r.map((v) => v.toString()))
+
+const o1 = none<number>();
+console.log(o1.isSome);
+console.log(o1.isNone);
+
+const o = some(10);
+console.log(o.isSome);
+console.log(o.isNone);
+
 ```
 
 [MIT License](./LICENSE.md)
