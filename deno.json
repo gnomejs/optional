@@ -1,5 +1,5 @@
 {
-    "name": "@gnome/assert",
+    "name": "@gnome/optional",
     "version": "0.0.0",
     "exports": {
         ".": "./mod.ts",

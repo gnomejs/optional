@@ -142,6 +142,23 @@ export class Option<T> {
     }
 
     /**
+     * Matches the state of the option and executes the corresponding function.
+     * 
+     * @template U - The return type when the option is in the Some state.
+     * @template V - The return type when the option is in the None state.
+     * @param {function(value: T): U} fnSome - The function to execute when the option is in the Some state.
+     * @param {function(): V} fnNone - The function to execute when the option is in the None state.
+     * @returns {U | V} - The result of executing the corresponding function.
+     */
+    match<U, V>(fnSome: (value: T) => U, fnNone: () => V): U | V {
+        if (this.#state === State.Some) {
+            return fnSome(this.#value!);
+        }
+
+        return fnNone();
+    }
+
+    /**
      * Calls the specified function with the value of this Option if it is Some, otherwise returns this Option.
      * @param fn - The function to call.
      * @returns This Option.
@@ -191,6 +208,21 @@ export class Option<T> {
 
         return this.#value!;
     }
+
+    /**
+     * Checks if the option satisfies the given condition.
+     * 
+     * @param fn - The condition function that takes a value of type T and returns a boolean.
+     * @returns `true` if the option satisfies the condition, `false` otherwise.
+     */
+    if(fn: (value: T) => boolean): boolean {
+        if (this.#state === State.None) {
+            return false;
+        }
+
+        return fn(this.#value!);
+    }
+
 
     /**
      * Combines this Option with another Option into a single Option containing a tuple of their values.

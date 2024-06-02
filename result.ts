@@ -140,6 +140,47 @@ export class Result<T, E = Error> {
     }
 
     /**
+      * Checks if the condition specified by the provided function is true.
+      * 
+      * @param fn - The function that specifies the condition to check.
+      * @returns `true` if the condition is true, `false` otherwise.
+      */
+    if (fn: (value: T) => boolean): boolean {
+        if (this.#state === State.Ok) {
+            return fn(this.#value!);
+        } 
+
+        return false;
+    }
+
+    /**
+     * Returns the value of the result as an array.
+     * If the result is in the Ok state, the value is wrapped in an array and returned.
+     * If the result is in any other state, an empty array is returned.
+     * 
+     * @returns An array containing the value of the result, or an empty array.
+     */
+    asArray(): T[] {
+        if (this.#state === State.Ok) {
+            return [this.#value!];
+        }
+
+        return [];
+    }
+
+    /**
+     * Resolves the promise with the stored value if the state is `Ok`,
+     * otherwise rejects the promise with the stored error.
+     * 
+     * @returns A promise that resolves with the stored value or rejects with the stored error.
+     */
+    resolve() : Promise<T> {
+        return this.#state === State.Ok ? 
+            Promise.resolve<T>(this.#value!) : 
+            Promise.reject<T>(this.#error!);
+    }
+
+    /**
      * Unwraps the value if the result is Ok, otherwise throws a ResultError with the error message.
      * @returns The unwrapped value.
      * @throws ResultError if the result is an error.
