@@ -143,7 +143,7 @@ export class Option<T> {
 
     /**
      * Matches the state of the option and executes the corresponding function.
-     * 
+     *
      * @template U - The return type when the option is in the Some state.
      * @template V - The return type when the option is in the None state.
      * @param {function(value: T): U} fnSome - The function to execute when the option is in the Some state.
@@ -211,7 +211,7 @@ export class Option<T> {
 
     /**
      * Checks if the option satisfies the given condition.
-     * 
+     *
      * @param fn - The condition function that takes a value of type T and returns a boolean.
      * @returns `true` if the option satisfies the condition, `false` otherwise.
      */
@@ -222,7 +222,6 @@ export class Option<T> {
 
         return fn(this.#value!);
     }
-
 
     /**
      * Combines this Option with another Option into a single Option containing a tuple of their values.
